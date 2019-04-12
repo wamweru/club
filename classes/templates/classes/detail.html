@@ -1,0 +1,65 @@
+{% extends 'classes/base.html'%}
+{% block title%}Club Info{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 my-1">
+                <div class="thumbnail" style="background-color:silver;height:300px;width:300px:border">
+                        <a href="{% url 'classes:detail' club.id %}">
+
+                        <img src="{{club.club_logo.url}}" class="img img-responsive" alt="" style="height:200px;width:100%"></a>
+                        <div class="caption">
+                            <h4>{{club.club_name}}</h4>
+                        </div>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-8">
+
+                {% if message %}
+                    <div class="alert alert-primary">
+                        <h4 class="text danger">{{ message}}</h4>
+                    </div>
+                {% endif%}
+                <ul class="nav nav-pills my-1" >
+
+                    <li><a href="{% url 'classes:new_student' club.id %}" class="btn btn-success btn-lg">Add Club Members</a></li>
+                </ul>
+                <div class="card card-info">
+                    <div class="card-body">
+
+                        <table class="table table-secondary">
+                            <h4 class="text-info">Club Members</h4>
+                            <thead>
+                                <td>Student Name</td>
+                                <td>Student Age</td>
+                                <td>Student Class</td>
+                                <td>Passport</td>
+                                <td>Action</td>
+                            </thead>
+                            <tbody>
+                            {% if club.student_set %}
+                                {% for student in club.student_set.all %}
+                                    <tr>
+                                        <td>{{student.student_name}}</td>
+                                        <td>{{student.student_age}}</td>
+                                        <td>{{student.stream}}</td>
+                                        <td><img src="{{student.cover.url}}" class="img img-responsive" alt="" style="height:50px;width:50px" ></td>
+                                        <td><a href="{% url 'classes:update_student' club.id%}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                            <a href="{% url 'classes:delete_student' club.id student.id %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+
+                                {% endfor%}
+                            {% endif%}
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'classes/base.html'%}
+{% block title%}Add Member{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+            <div class="panel panel-info panel-body my-2" style="background-color:silver;border:radius;border-color:black">
+                <h3 class="text-primary">{% if object %}Update Member{% else %} Add Member{% endif %}</h3>
+                <hr>
+                <form method="post" enctype="multipart/form-data" class="mx-2">
+
+                    {%csrf_token%}
+                    {{form|crispy}}
+
+                    <div class="form-group p-3">
+                         <button type="submit" class="btn btn-info">Submit</button>
+                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
